@@ -57,7 +57,7 @@
 <body>
     <div class="header-box">
         <h1>ೃ⁀➷ LA TIENDA DE CRAZY DAVE 🧟</h1>
-        <p style="font-family:'Permanent Marker'; margin:5px 0;">"Wabi-wabbo! ¿Dizez que quierez un zerebro aleatorio?"</p>
+        <p style="font-family:'Permanent Marker'; margin:5px 0;">"Wabi-wabbo! Elige tu rrazion de zerebroz freskoz."</p>
     </div>
     
     <div class="main-sel-box">
@@ -66,9 +66,10 @@
             <input type="text" id="nombre-cliente" class="mago-input" placeholder="Víctima (Cliente)...">
         </div>
         <select id="cantidad" onchange="generarCajas()">
-            <option value="0">¿CUÁNTOS ZEREBROZ VAS A MORDER? --</option>
-            <option value="1">1 Zerebro (Zuelto)</option>
-            <option value="12">12 Zerebroz (Zopa)</option>
+            <option value="0">¿QUÉ VAS A COMPRAR? --</option>
+            <option value="1">🧠 Zerebro Suelto (1 zorpreza) - 5.000G</option>
+            <option value="6">🧪 Plato de Media Zopa (6 zorprezas) - 45.000G</option>
+            <option value="12">🥣 Sopa de Zerebroz XL (12 zorprezas) - 100.000G</option>
         </select>
     </div>
 
@@ -102,7 +103,7 @@
         window.onload = cargarHistorialGlobal;
 
         function generarCajas() {
-            const num = document.getElementById('cantidad').value;
+            const num = parseInt(document.getElementById('cantidad').value);
             const container = document.getElementById('contenedor-grageas');
             container.innerHTML = "";
             if (num > 0) {
@@ -110,14 +111,11 @@
                 let opts = `<option value="Aleatorio">Cerebro Aleatorio 🎲</option>`;
                 SABORES.forEach(s => opts += `<option value="${s}">Cerebro de ${s}</option>`);
                 
-                const limite = num == 12 ? 12 : 1;
-                for (let i = 1; i <= limite; i++) {
+                for (let i = 1; i <= num; i++) {
                     const card = document.createElement('div');
                     card.className = 'gragea-card';
-                    card.innerHTML = `<span style="color:var(--brain-pink); font-weight:bold; font-size:18px;">PLATILLO ${i} 🥣</span><br><br>` + 
-                                     `<span class="label-cerebro">Morder pieza 1:</span><select class="sabor-sel sabor-box-${i}">${opts}</select>` +
-                                     `<span class="label-cerebro">Morder pieza 2:</span><select class="sabor-sel sabor-box-${i}">${opts}</select>` +
-                                     `<span class="label-cerebro">Morder pieza 3:</span><select class="sabor-sel sabor-box-${i}">${opts}</select>`;
+                    card.innerHTML = `<span style="color:var(--brain-pink); font-weight:bold; font-size:18px;">PIEZA ${i} 🧠</span><br><br>` + 
+                                     `<span class="label-cerebro">Morder cerebro de:</span><select class="sabor-sel sabor-box-${i}">${opts}</select>`;
                     container.appendChild(card);
                 }
             }
@@ -138,27 +136,23 @@
         function abrirGrageas() {
             const trabajador = document.getElementById('nombre-trabajador').value || "Zonbi Dave";
             const cliente = document.getElementById('nombre-cliente').value || "Víctima";
-            const num = document.getElementById('cantidad').value;
+            const num = parseInt(document.getElementById('cantidad').value);
             
             let textoCopiable = `⋆ ————————✧◦🧟◦✧———————— ⋆\n\n`;
-            textoCopiable += `╰┈➤ ꜱᴏᴘᴀ ᴅᴇ ᴢᴇʀᴇʙʀᴏᴢ 🥣🧠\n\n`;
+            let titulo = num === 12 ? "ꜱᴏᴘᴀ ᴅᴇ ᴢᴇʀᴇʙʀᴏᴢ ᴘʀᴇᴍɪᴜᴍ 🥣" : (num === 6 ? "ᴍᴇᴅɪᴀ ᴢᴏᴘᴀ ᴅᴇ ᴢᴇʀᴇʙʀᴏᴢ 🧪" : "ᴢᴇʀᴇʙʀᴏ ᴢᴜᴇʟᴛᴏ 🧠");
+            textoCopiable += `╰┈➤ ${titulo}\n\n`;
 
-            const limite = num == 12 ? 12 : 1;
-            for (let i = 1; i <= limite; i++) {
-                textoCopiable += `🥣 PLATO ${i}\n`;
-                const selects = document.querySelectorAll(`.sabor-box-${i}`);
-                selects.forEach(sel => {
-                    let sabor = sel.value;
-                    if (sabor === "Aleatorio") {
-                        sabor = SABORES[Math.floor(Math.random() * SABORES.length)];
-                    }
-                    const premio = generarResultadoTramposo();
-                    textoCopiable += `Masticando cerebro de ${sabor} ⟶ ${premio}\n`;
-                });
-                textoCopiable += `\n`;
+            for (let i = 1; i <= num; i++) {
+                const select = document.querySelector(`.sabor-box-${i}`);
+                let sabor = select.value;
+                if (sabor === "Aleatorio") {
+                    sabor = SABORES[Math.floor(Math.random() * SABORES.length)];
+                }
+                const premio = generarResultadoTramposo();
+                textoCopiable += `Pieza ${i}: Masticando cerebro de ${sabor} ⟶ ${premio}\n`;
             }
 
-            textoCopiable += `⋆ ————————✧◦🧟◦✧———————— ⋆\n`;
+            textoCopiable += `\n⋆ ————————✧◦🧟◦✧———————— ⋆\n`;
             textoCopiable += `@${cliente} | Atendido por: ${trabajador}`;
 
             const id = Date.now();
