@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Zopa de Zerebroz - Crazy Dave</title>
+    <title>Zopa de Zerebroz - La Casa de Dave</title>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root { --zombie-green: #4f7942; --brain-pink: #ff8fb1; --dirt-brown: #3d2b1f; --gold: #ffd700; }
@@ -29,7 +29,7 @@
             border: 2px solid var(--zombie-green); background: #000; color: var(--brain-pink); font-size: 16px; font-family: 'Special Elite';
         }
 
-        #cantidad { width: 100%; background: transparent; border: none; color: var(--gold); font-size: 18px; cursor: pointer; border-top: 1px solid #333; padding-top: 10px; font-family: 'Permanent Marker'; }
+        #cantidad { width: 100%; background: transparent; border: none; color: var(--gold); font-size: 18px; outline: none; cursor: pointer; border-top: 1px solid #333; padding-top: 10px; font-family: 'Permanent Marker'; }
         
         .gragea-card { width: 90%; max-width: 450px; background: rgba(30, 30, 30, 0.9); border: 2px solid var(--brain-pink); border-radius: 12px; padding: 20px; margin: 15px 0; position: relative; }
         .gragea-card::after { content: '🧠'; position: absolute; top: -10px; right: -10px; font-size: 24px; }
@@ -42,7 +42,7 @@
         }
         .btn-abrir:hover { background: var(--brain-pink); color: #000; transform: scale(1.05) rotate(2deg); }
 
-        .historial-box { width: 95%; max-width: 650px; background: rgba(0,0,0,0.95); border: 2px solid var(--dirt-brown); border-radius: 12px; padding: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+        .historial-box { width: 95%; max-width: 650px; background: rgba(0,0,0,0.95); border: 2px solid var(--dirt-brown); border-radius: 12px; padding: 20px; }
         .historial-entrada { position: relative; background: rgba(79, 121, 66, 0.1); border-left: 5px solid var(--zombie-green); padding: 15px; margin-bottom: 15px; border-radius: 8px; white-space: pre-wrap; font-size: 14px; color: #e0e0e0; }
         
         .btn-copiar {
@@ -50,13 +50,13 @@
             border: none; padding: 5px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; font-family: 'Permanent Marker';
         }
 
-        .footer { font-family: 'Creepster'; color: var(--zombie-green); font-size: 28px; margin: 40px 0; letter-spacing: 2px; }
+        .footer { font-family: 'Creepster'; color: var(--zombie-green); font-size: 28px; margin: 40px 0; }
     </style>
 </head>
 <body>
     <div class="header-box">
         <h1>ೃ⁀➷ LA TIENDA DE CRAZY DAVE 🧟</h1>
-        <p style="font-family:'Permanent Marker'; margin:5px 0;">"Wabi-wabbo! Coman zerebroz... o pierdan todo."</p>
+        <p style="font-family:'Permanent Marker'; margin:5px 0;">"Wabi-wabbo! ¿Dizez que quierez un zerebro aleatorio?"</p>
     </div>
     
     <div class="main-sel-box">
@@ -79,9 +79,10 @@
         <div id="log-content">Buzcando zerebroz...</div>
     </div>
 
-    <div class="footer">HOGWARTS ORIÓN ZOMBIE</div>
+    <div class="footer">LA CASA DE DAVE - H.O.</div>
 
     <script>
+        // URL de tu Firebase original
         const DB_URL = "https://hogwarts-orion-default-rtdb.firebaseio.com/historial_zombie.json";
 
         const SABORES = ["Jeremias Snape", "Justina Black", "Andra Scamander", "Laura Lovegood Maggi", "Malena Nott de Scamander", "Leslie Rowan Scamander de Nott", "Sofi Hofferson Hopps", "Cris DelaCour", "Uriel Scamander Black", "Fernando Greengrass", "Melina Malfoy Weasley", "Luis Weasley Malfoy", "Odettesalia Dalila Grindelwald Salvatote", "Aix Lovegood Black", "Vania Hazel Malfoy", "Belu Amelia Black Scamander", "Tomas Goldstein", "Martina Denise Sayre Black", "Gabriel Eduardo Sayre Black", "Nancy Prue Romero Halliwel", "Fran Zabini Woodcroft", "Diego Lars Goldstein", "Nick Elodeon Moretti Scamander", "Aude Volant", "Nina Isabella Zabini Grindelwald", "Rabbit Black Potter", "Milagros Malfoy Potter", "Alii Evans", "Gabriel Percival Nott Grindelwald", "Sheena Black", "Molly Black Potter", "Matt Nightflame", "Belu Malfoy", "Leonor Wood", "Bets Peverell", "Isaac Sak", "Darianny Black Scamander", "Milch Greengrass Lovegood", "Isidora Riddle", "Axel Flavor", "Amra Rosier", "Angélica Snape Lestrange", "Camila Nott", "Raphael Black", "Alicia Lissette Grindelwald Lestrange", "Elizabeth Malfoy", "Gisela Silverthorne", "Estela Malfoy", "Meisy Dawnstrider", "Xavyera Black", "Benja Scamander Black", "Jose Black", "Giovanna Prince", "Juan Blackjack", "Alexis Black", "Alexander Potter", "Mar Selwyn", "Fer Riddell", "Wendy Black", "Katt Riddle", "Yue Ming", "Angel Rosier", "Jimmy Baltazar Jinwoo Cheonsang Sung", "Linda Yudith Nott"];
@@ -89,7 +90,7 @@
         function cargarHistorialGlobal() {
             fetch(DB_URL).then(res => res.json()).then(data => {
                 const log = document.getElementById('log-content');
-                if(!data) { log.innerHTML = "No hay zerebroz comidoz."; return; }
+                if(!data) { log.innerHTML = "No hay zerebroz registrados."; return; }
                 let html = "";
                 const entradas = Object.values(data).reverse();
                 entradas.forEach(e => html += e);
@@ -106,10 +107,9 @@
             container.innerHTML = "";
             if (num > 0) {
                 document.getElementById('btn-magico').style.display = "inline-block";
-                let opts = `<option value="Incógnito">-- Elegir Zerebro --</option>`;
+                let opts = `<option value="Aleatorio">Zerebro Aleatorio 🎲</option>`;
                 SABORES.forEach(s => opts += `<option value="${s}">${s}</option>`);
                 
-                // Si es sopa (12) o suelto (1)
                 const limite = num == 12 ? 12 : 1;
                 for (let i = 1; i <= limite; i++) {
                     const card = document.createElement('div');
@@ -124,21 +124,20 @@
         }
 
         function generarResultadoTramposo() {
-            // Probabilidades: 70% de que sea algo malo, 30% de que sea algo bueno
+            // 70% probabilidad de pérdida, 30% de ganancia
             const esMalo = Math.random() < 0.70;
-            const esPuntos = Math.random() < 0.5;
             const cantidad = Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000;
-            const solesGaleones = Math.random() < 0.3 ? "Soles (Galeones) ☀️" : "Puntos 🧠";
+            const solesGaleones = Math.random() < 0.4 ? "Puntos 🧠" : "Soles (Galeones) ☀️";
 
             if(esMalo) {
-                return `-${cantidad.toLocaleString()} ${solesGaleones} (¡Podrido! 🤢)`;
+                return `-${cantidad.toLocaleString()} ${solesGaleones} (¡Podrido! 🤮)`;
             } else {
-                return `+${cantidad.toLocaleString()} ${solesGaleones} (¡Zabrozo! 😋)`;
+                return `+${cantidad.toLocaleString()} ${solesGaleones} (¡Zabrozo! 🌻)`;
             }
         }
 
         function abrirGrageas() {
-            const trabajador = document.getElementById('nombre-trabajador').value || "Zonbi Hambriento";
+            const trabajador = document.getElementById('nombre-trabajador').value || "Zonbi Dave";
             const cliente = document.getElementById('nombre-cliente').value || "Víctima";
             const num = document.getElementById('cantidad').value;
             
@@ -150,7 +149,10 @@
                 textoCopiable += `Zerebro ${i}\n`;
                 const selects = document.querySelectorAll(`.sabor-box-${i}`);
                 selects.forEach(sel => {
-                    const sabor = sel.value === "Incógnito" ? "Zerebro de Desconocido ❓" : sel.value;
+                    let sabor = sel.value;
+                    if (sabor === "Aleatorio") {
+                        sabor = SABORES[Math.floor(Math.random() * SABORES.length)];
+                    }
                     const premio = generarResultadoTramposo();
                     textoCopiable += `${sabor} ⟶ ${premio}\n`;
                 });
@@ -187,4 +189,3 @@
     </script>
 </body>
 </html>
-
