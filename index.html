@@ -34,6 +34,7 @@
         .gragea-card { width: 90%; max-width: 450px; background: rgba(30, 30, 30, 0.9); border: 2px solid var(--brain-pink); border-radius: 12px; padding: 20px; margin: 15px 0; position: relative; }
         .gragea-card::after { content: '🧠'; position: absolute; top: -10px; right: -10px; font-size: 24px; }
 
+        .label-cerebro { font-size: 12px; color: var(--brain-pink); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; font-weight: bold; }
         .sabor-sel { width: 100%; padding: 10px; background: #000; border: 1px solid var(--zombie-green); border-radius: 6px; color: #fff; margin-bottom: 10px; font-family: 'Special Elite'; }
         
         .btn-abrir { 
@@ -82,7 +83,6 @@
     <div class="footer">LA CASA DE DAVE - H.O.</div>
 
     <script>
-        // URL de tu Firebase original
         const DB_URL = "https://hogwarts-orion-default-rtdb.firebaseio.com/historial_zombie.json";
 
         const SABORES = ["Jeremias Snape", "Justina Black", "Andra Scamander", "Laura Lovegood Maggi", "Malena Nott de Scamander", "Leslie Rowan Scamander de Nott", "Sofi Hofferson Hopps", "Cris DelaCour", "Uriel Scamander Black", "Fernando Greengrass", "Melina Malfoy Weasley", "Luis Weasley Malfoy", "Odettesalia Dalila Grindelwald Salvatote", "Aix Lovegood Black", "Vania Hazel Malfoy", "Belu Amelia Black Scamander", "Tomas Goldstein", "Martina Denise Sayre Black", "Gabriel Eduardo Sayre Black", "Nancy Prue Romero Halliwel", "Fran Zabini Woodcroft", "Diego Lars Goldstein", "Nick Elodeon Moretti Scamander", "Aude Volant", "Nina Isabella Zabini Grindelwald", "Rabbit Black Potter", "Milagros Malfoy Potter", "Alii Evans", "Gabriel Percival Nott Grindelwald", "Sheena Black", "Molly Black Potter", "Matt Nightflame", "Belu Malfoy", "Leonor Wood", "Bets Peverell", "Isaac Sak", "Darianny Black Scamander", "Milch Greengrass Lovegood", "Isidora Riddle", "Axel Flavor", "Amra Rosier", "Angélica Snape Lestrange", "Camila Nott", "Raphael Black", "Alicia Lissette Grindelwald Lestrange", "Elizabeth Malfoy", "Gisela Silverthorne", "Estela Malfoy", "Meisy Dawnstrider", "Xavyera Black", "Benja Scamander Black", "Jose Black", "Giovanna Prince", "Juan Blackjack", "Alexis Black", "Alexander Potter", "Mar Selwyn", "Fer Riddell", "Wendy Black", "Katt Riddle", "Yue Ming", "Angel Rosier", "Jimmy Baltazar Jinwoo Cheonsang Sung", "Linda Yudith Nott"];
@@ -107,24 +107,23 @@
             container.innerHTML = "";
             if (num > 0) {
                 document.getElementById('btn-magico').style.display = "inline-block";
-                let opts = `<option value="Aleatorio">Zerebro Aleatorio 🎲</option>`;
-                SABORES.forEach(s => opts += `<option value="${s}">${s}</option>`);
+                let opts = `<option value="Aleatorio">Cerebro Aleatorio 🎲</option>`;
+                SABORES.forEach(s => opts += `<option value="${s}">Cerebro de ${s}</option>`);
                 
                 const limite = num == 12 ? 12 : 1;
                 for (let i = 1; i <= limite; i++) {
                     const card = document.createElement('div');
                     card.className = 'gragea-card';
-                    card.innerHTML = `<span style="color:var(--brain-pink); font-weight:bold;">Zerebro ${i}:</span>` + 
-                                     `<select class="sabor-sel sabor-box-${i}">${opts}</select>` +
-                                     `<select class="sabor-sel sabor-box-${i}">${opts}</select>` +
-                                     `<select class="sabor-sel sabor-box-${i}">${opts}</select>`;
+                    card.innerHTML = `<span style="color:var(--brain-pink); font-weight:bold; font-size:18px;">PLATILLO ${i} 🥣</span><br><br>` + 
+                                     `<span class="label-cerebro">Morder pieza 1:</span><select class="sabor-sel sabor-box-${i}">${opts}</select>` +
+                                     `<span class="label-cerebro">Morder pieza 2:</span><select class="sabor-sel sabor-box-${i}">${opts}</select>` +
+                                     `<span class="label-cerebro">Morder pieza 3:</span><select class="sabor-sel sabor-box-${i}">${opts}</select>`;
                     container.appendChild(card);
                 }
             }
         }
 
         function generarResultadoTramposo() {
-            // 70% probabilidad de pérdida, 30% de ganancia
             const esMalo = Math.random() < 0.70;
             const cantidad = Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000;
             const solesGaleones = Math.random() < 0.4 ? "Puntos 🧠" : "Soles (Galeones) ☀️";
@@ -146,7 +145,7 @@
 
             const limite = num == 12 ? 12 : 1;
             for (let i = 1; i <= limite; i++) {
-                textoCopiable += `Zerebro ${i}\n`;
+                textoCopiable += `🥣 PLATO ${i}\n`;
                 const selects = document.querySelectorAll(`.sabor-box-${i}`);
                 selects.forEach(sel => {
                     let sabor = sel.value;
@@ -154,7 +153,7 @@
                         sabor = SABORES[Math.floor(Math.random() * SABORES.length)];
                     }
                     const premio = generarResultadoTramposo();
-                    textoCopiable += `${sabor} ⟶ ${premio}\n`;
+                    textoCopiable += `Masticando cerebro de ${sabor} ⟶ ${premio}\n`;
                 });
                 textoCopiable += `\n`;
             }
